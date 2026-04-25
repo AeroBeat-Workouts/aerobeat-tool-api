@@ -9,7 +9,7 @@ A **Tool** is a reusable service or singleton manager (e.g., API Client, Analyti
 *   **Type:** Tool (Service/Module)
 *   **License:** **MPL 2.0** (Weak Copyleft / Library)
 *   **Dependencies:**
-    *   `aerobeat-core` (Required)
+    *   `aerobeat-tool-core` (Canonical shared tool/workflow contract)
     *   `aerobeat-vendor-*` (Allowed)
 
 ## GodotEnv development flow
@@ -33,7 +33,7 @@ cd .testbed
 godotenv addons install
 ```
 
-That installs the pinned `aerobeat-core` foundation plus GUT into `.testbed/addons/`.
+That restores this repo's current dev/test manifest into `.testbed/addons/`. In the lane-based architecture, Tool repos should describe this dependency as `aerobeat-tool-core`.
 
 ### Open the workbench
 
@@ -67,6 +67,6 @@ godot --headless --path .testbed --script addons/gut/gut_cmdln.gd \
 ### Validation notes
 
 - `.testbed/addons.jsonc` is the committed dev/test dependency contract.
-- The manifest pins `aerobeat-core` to `v0.1.0` and GUT to `main`.
+- The current manifest still pins the transition-era `aerobeat-core` package key to `v0.1.0` alongside GUT `main`. Canonical lane ownership is `aerobeat-tool-core`.
 - Repo-local unit tests live under `.testbed/tests/`; the hidden workbench uses the committed `.testbed/src -> ../src` bridge for this repo's `src/`-rooted package layout.
 - The current package shape is consumed from the repo root (`subfolder: "/"`) for downstream installs.
