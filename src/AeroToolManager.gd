@@ -1,6 +1,7 @@
-## Base template for a Tool Manager.
+## Base template for the AeroBeat online service manager.
 ##
-## This class serves as the main entry point for the tool service.
+## This class is the main entry point for AeroBeat-facing identity,
+## access, entitlement, discovery, and submission services.
 ## It is intended to be used as an Autoload (Singleton) or a static helper.
 class_name AeroToolManager
 extends Node

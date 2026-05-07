@@ -1,16 +1,70 @@
-# AeroBeat Tool - AeroBeat Official Api
+# AeroBeat Tool - AeroBeat Identity, Access, and Entitlements API
 
-This is the official Tool to access the AeroBeat Api.
+This repo is the official **AeroBeat-facing online service layer** for game clients and related product surfaces.
 
-A **Tool** is a reusable service or singleton manager (e.g., API Client, Analytics, Discord Integration). It is designed to be modular and plugged into an **Assembly**.
+It should be treated as the reusable Tool that exposes AeroBeat-shaped capabilities for:
 
-## 📋 Repository Details
+- athlete session and account state
+- linked-account status
+- free vs premium workout access
+- trusted discovery and library sync
+- install/download policy for approved content
+- creator submission and status flows
 
-*   **Type:** Tool (Service/Module)
-*   **License:** **MPL 2.0** (Weak Copyleft / Library)
-*   **Dependencies:**
-    *   `aerobeat-tool-core` (Canonical shared tool/workflow contract)
-    *   `aerobeat-vendor-*` (Allowed)
+A **Tool** is a reusable service or singleton manager (for example an API client, analytics manager, or integration layer) designed to be modular and plugged into an **Assembly**.
+
+## What this repo is for
+
+`aerobeat-tool-api` is **not** meant to be a generic REST wrapper or a thin mod.io SDK clone.
+
+Its job is to provide the **AeroBeat-owned client contract** that product repos consume while provider-specific mechanics stay behind adapter seams.
+
+That means:
+
+- product repos should depend on `aerobeat-tool-api`
+- `aerobeat-tool-api` should speak in **AeroBeat terms**
+- provider DTOs, transport quirks, and account-linking details should stay in vendor repos such as `aerobeat-vendor-modio`
+
+## Current strategic framing
+
+The current docs/architecture direction is:
+
+- **AeroBeat is free-to-play**
+- the product supports **free workouts** and **premium workouts**
+- **mod.io remains the current community/distribution layer** for UGC and premium workout distribution
+- premium purchases must flow through **official platform/store paths**
+- provider-side ownership sync should rely only on **official, non-deprecated surfaces** we can legitimately support
+- AeroBeat still needs an **AeroBeat-owned account architecture** as a first-class concern for progression, retention, and long-term portability
+
+This repo should therefore become the Godot-imported manager for **identity, access, entitlements, discovery, library sync, downloads, and creator submissions**.
+
+## Repository details
+
+- **Type:** Tool (service/module)
+- **License:** **MPL 2.0** (weak copyleft / library)
+- **Dependencies:**
+  - `aerobeat-tool-core` (canonical shared tool/workflow contract)
+  - `aerobeat-vendor-*` (allowed provider seams)
+
+## Recommended boundary
+
+### Own here
+
+- `AeroToolManager` singleton/autoload entrypoint
+- AeroBeat session/bootstrap helpers
+- account/access/entitlement service interfaces
+- discovery/library/download/submission service orchestration
+- AeroBeat-shaped DTOs or resource models
+- provider composition and selection behind internal interfaces
+- resilience behavior such as retry/backoff and rate-limit handling
+
+### Do not own here
+
+- raw mod.io DTOs as public contract
+- direct product-repo mod.io integration
+- provider wallet/purchase semantics as the long-term public vocabulary
+- gameplay logic or feature-specific UI flows
+- vendor-specific account-link transport as the public API shape
 
 ## GodotEnv development flow
 
@@ -33,7 +87,7 @@ cd .testbed
 godotenv addons install
 ```
 
-That restores this repo's current dev/test manifest into `.testbed/addons/`. In the lane-based architecture, Tool repos should describe this dependency as `aerobeat-tool-core`.
+That restores this repo's current dev/test manifest into `.testbed/addons/`.
 
 ### Open the workbench
 
@@ -42,8 +96,6 @@ From the repo root:
 ```bash
 godot --editor --path .testbed
 ```
-
-Use this `.testbed/` project as the canonical direct-development and bugfinding surface for tool work.
 
 ### Import smoke check
 
@@ -64,9 +116,8 @@ godot --headless --path .testbed --script addons/gut/gut_cmdln.gd \
   -gexit
 ```
 
-### Validation notes
+## Validation notes
 
 - `.testbed/addons.jsonc` is the committed dev/test dependency contract.
-- The current manifest still pins the transition-era `aerobeat-core` package key to `v0.1.0` alongside GUT `main`. Canonical lane ownership is `aerobeat-tool-core`.
-- Repo-local unit tests live under `.testbed/tests/`; the hidden workbench uses the committed `.testbed/src -> ../src` bridge for this repo's `src/`-rooted package layout.
 - The current package shape is consumed from the repo root (`subfolder: "/"`) for downstream installs.
+- Until the service surface is implemented, this repo remains mostly skeleton/package scaffolding; the important point is that the public framing should already reflect the intended AeroBeat-owned identity/access/entitlement role.
