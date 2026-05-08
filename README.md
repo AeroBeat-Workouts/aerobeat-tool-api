@@ -9,7 +9,7 @@ It should be treated as the reusable Tool that exposes AeroBeat-shaped capabilit
 - free vs premium workout access
 - trusted discovery and library sync
 - install/download policy for approved content
-- creator submission and status flows
+- future-safe seams for creator/review integrations without making them the current v1 source of truth
 
 A **Tool** is a reusable service or singleton manager (for example an API client, analytics manager, or integration layer) designed to be modular and plugged into an **Assembly**.
 
@@ -31,12 +31,17 @@ The current docs/architecture direction is:
 
 - **AeroBeat is free-to-play**
 - the product supports **free workouts** and **premium workouts**
-- **mod.io remains the current community/distribution layer** for UGC and premium workout distribution
+- workout packages are currently governed as **one difficulty per package**
+- coaching is **optional**, but when present it is a package-level feature rather than a partial/inconsistent add-on
+- **all public UGC, free and premium, must pass review before release**
+- **mod.io Full Curation is the current v1 public review/distribution gate**
 - premium purchases must flow through **official platform/store paths**
 - provider-side ownership sync should rely only on **official, non-deprecated surfaces** we can legitimately support
 - AeroBeat still needs an **AeroBeat-owned account architecture** as a first-class concern for progression, retention, and long-term portability
 
-This repo should therefore become the Godot-imported manager for **identity, access, entitlements, discovery, library sync, downloads, and creator submissions**.
+This repo should therefore become the Godot-imported manager for **identity, access, entitlements, discovery, library sync, and downloads for approved/public content**, while leaving room for future creator/review integration seams if later product phases actually need them.
+
+For v1 specifically, this repo should **not** imply that AeroBeat already owns the authoritative submission/review/status workflow. The locked policy says the public gate lives in **mod.io Full Curation** right now. If this package later exposes creator or reviewer helpers, those should be framed as adapters or future-facing seams layered around the current gate rather than a second competing product truth.
 
 ## Repository details
 
@@ -53,15 +58,17 @@ This repo should therefore become the Godot-imported manager for **identity, acc
 - `AeroToolManager` singleton/autoload entrypoint
 - AeroBeat session/bootstrap helpers
 - account/access/entitlement service interfaces
-- discovery/library/download/submission service orchestration
+- discovery/library/download orchestration for approved/public content
 - AeroBeat-shaped DTOs or resource models
 - provider composition and selection behind internal interfaces
 - resilience behavior such as retry/backoff and rate-limit handling
+- carefully scoped seams for future creator/review workflows, without treating them as the current v1 approval authority
 
 ### Do not own here
 
 - raw mod.io DTOs as public contract
 - direct product-repo mod.io integration
+- a separate AeroBeat-owned review/status workflow presented as the v1 release authority
 - provider wallet/purchase semantics as the long-term public vocabulary
 - gameplay logic or feature-specific UI flows
 - vendor-specific account-link transport as the public API shape
@@ -120,4 +127,4 @@ godot --headless --path .testbed --script addons/gut/gut_cmdln.gd \
 
 - `.testbed/addons.jsonc` is the committed dev/test dependency contract.
 - The current package shape is consumed from the repo root (`subfolder: "/"`) for downstream installs.
-- Until the service surface is implemented, this repo remains mostly skeleton/package scaffolding; the important point is that the public framing should already reflect the intended AeroBeat-owned identity/access/entitlement role.
+- Until the service surface is implemented, this repo remains mostly skeleton/package scaffolding; the important point is that the public framing should already reflect the intended AeroBeat-owned identity/access/entitlement role plus approved-content access scope, without overstating v1 creator/review ownership.

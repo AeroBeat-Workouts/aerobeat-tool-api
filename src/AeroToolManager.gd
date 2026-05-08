@@ -1,7 +1,9 @@
 ## Base template for the AeroBeat online service manager.
 ##
 ## This class is the main entry point for AeroBeat-facing identity,
-## access, entitlement, discovery, and submission services.
+## access, entitlement, discovery, and approved-content services.
+## V1 public review/release truth still lives in mod.io curation; any
+## creator/review workflow support here should be treated as a future seam.
 ## It is intended to be used as an Autoload (Singleton) or a static helper.
 class_name AeroToolManager
 extends Node
