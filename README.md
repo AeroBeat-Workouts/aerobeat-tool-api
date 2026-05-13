@@ -36,10 +36,10 @@ The current docs/architecture direction is:
 - **all public UGC, free and premium, must pass review before release**
 - **mod.io Full Curation is the current v1 public review/distribution gate**
 - premium purchases must flow through **official platform/store paths**
-- provider-side ownership sync should rely only on **official, non-deprecated surfaces** we can legitimately support
+- provider-side ownership sync should follow the **current intended v1 seam** only where **official, non-deprecated surfaces** exist that we can legitimately support; firmer provider/legal confirmation on the long-term paid-workout posture is still pending
 - AeroBeat still needs an **AeroBeat-owned account architecture** as a first-class concern for progression, retention, and long-term portability
 
-This repo should therefore become the Godot-imported manager for **identity, access, entitlements, discovery, library sync, and downloads for approved/public content**, while leaving room for future creator/review integration seams if later product phases actually need them.
+This repo should therefore become the Godot-imported manager for **identity, access, entitlements, discovery, library sync, and downloads for approved/public content** in the current intended v1 model, while leaving room for future creator/review integration seams if later product phases actually need them.
 
 For v1 specifically, this repo should **not** imply that AeroBeat already owns the authoritative submission/review/status workflow. The locked policy says the public gate lives in **mod.io Full Curation** right now. If this package later exposes creator or reviewer helpers, those should be framed as adapters or future-facing seams layered around the current gate rather than a second competing product truth.
 
