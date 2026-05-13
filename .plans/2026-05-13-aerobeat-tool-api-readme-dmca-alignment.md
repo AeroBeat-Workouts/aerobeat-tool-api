@@ -102,7 +102,7 @@ Exact changes made:
 Outcome:
 - The README now matches the Task 1 audit recommendation and better aligns with `REF-03`, `REF-05`, and `REF-06` without weakening the package boundary.
 - Proportionate validation passed with `git diff --check` on the changed files.
-- Commit/push status: pending at plan-update time.
+- Commit/push completed on `main` in `9981dd9` (`docs: soften tool-api README legal posture`).
 
 ---
 
