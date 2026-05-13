@@ -1,7 +1,7 @@
 # AeroBeat Tool API README DMCA Alignment
 
 **Date:** 2026-05-13  
-**Status:** Draft  
+**Status:** Complete  
 **Agent:** Chip 🐱‍💻
 
 ---
@@ -121,24 +121,40 @@ Outcome:
 - `.plans/2026-05-13-aerobeat-tool-api-readme-dmca-alignment.md`
 - `README.md` only if minimum necessary fixes are required
 
-**Status:** ⏳ Pending
+**Status:** ✅ Complete
 
-**Results:** Pending.
+**Results:** Final QA/audit completed against `REF-02` through `REF-06`.
+
+Audit findings:
+- `README.md:32-40` now aligns with the softened posture in `REF-03`, `REF-04`, `REF-05`, and `REF-06`: it preserves the free-to-play + free/premium workout framing, keeps **mod.io Full Curation** as the current v1 gate, requires official platform/store purchase paths, and explicitly softens provider-backed ownership sync to the **current intended v1 seam** pending firmer provider/legal confirmation.
+- `README.md:42-44` keeps the repo charter explicit and intact: `aerobeat-tool-api` still owns the AeroBeat-facing identity/access/entitlement/discovery/library/download contract, while clearly avoiding any claim that AeroBeat already owns the authoritative v1 submission/review/status workflow.
+- No wording found that still overstates provider certainty, legal certainty, or direct AeroBeat ownership of the current public review gate.
+- No unnecessary scope drift was introduced: the change remains confined to the strategic-framing block, with no repo-boundary expansion or policy broadening elsewhere in the README.
+
+Validation evidence:
+- Reviewed the active plan, final `README.md`, and the coherence references in `REF-03` through `REF-06`.
+- Verified the landed README wording directly at `README.md:32-44`.
+- Confirmed the repo is clean after the prior README commit and that `git diff --check` passes.
+
+Disposition:
+- Pass. No additional README edits were necessary.
+- No commit/push performed because the audit required no code or doc changes.
 
 ---
 
 ## Final Results
 
-**Status:** ⏳ Pending
+**Status:** ✅ Complete
 
-**What We Built:** Pending.
+**What We Built:** A README-only wording alignment pass for `aerobeat-tool-api` that keeps the repo positioned as the AeroBeat-facing identity/access/entitlement layer while softening premium/public-UGC and provider/legal-posture language to match the current AeroBeat docs set.
 
-**Reference Check:** Pending.
+**Reference Check:** `REF-02` now coheres with `REF-03`, `REF-04`, `REF-05`, and `REF-06`. The README preserves the explicit repo charter, keeps mod.io Full Curation as the current v1 public gate, avoids overstating provider-backed premium ownership/legal certainty, and does not introduce extra scope beyond the targeted strategic-framing block.
 
 **Commits:**
-- Pending
+- `9981dd9` - `docs: soften tool-api README legal posture`
+- `b173668` - `docs: record tool-api README task result`
 
-**Lessons Learned:** Pending.
+**Lessons Learned:** For adjacent doc-alignment passes, the safest pattern is to keep the package/repo charter firm while softening only the sentences that imply more provider or legal certainty than the current source-of-truth docs actually support.
 
 ---
 
